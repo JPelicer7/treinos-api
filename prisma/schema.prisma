@@ -38,7 +38,7 @@ model WorkoutPlan {
   updatedAt   DateTime     @updatedAt
   workoutDays WorkoutDay[]
 
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 enum weekDay {
@@ -57,15 +57,16 @@ model WorkoutDay {
   workoutPlanId              String
   isRest                     Boolean           @default(false)
   weekDay                    weekDay
-  exercises           workoutExercise[]
+  exercises                  WorkoutExercise[]
+  sessions                   WorkoutSession[]
   estimatedDurationInSeconds Int
   createdAt                  DateTime          @default(now())
   updatedAt                  DateTime          @updatedAt
 
-  workoutPlan WorkoutPlan @relation(fields: [workoutPlanId], references: [id])
+  workoutPlan WorkoutPlan @relation(fields: [workoutPlanId], references: [id], onDelete: Cascade)
 }
 
-model workoutExercise {
+model WorkoutExercise {
   id                String   @id @default(uuid())
   name              String
   workoutDayId      String
@@ -76,7 +77,18 @@ model workoutExercise {
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 
-  workoutDay WorkoutDay @relation(fields: [workoutDayId], references: [id])
+  workoutDay WorkoutDay @relation(fields: [workoutDayId], references: [id], onDelete: Cascade)
+}
+
+model WorkoutSession {
+  id           String    @id @default(uuid())
+  workoutDayId String
+  startedAt    DateTime  @db.Timestamptz()
+  completedAt  DateTime? @db.Timestamptz()
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  workoutDay WorkoutDay @relation(fields: [workoutDayId], references: [id], onDelete: Cascade)
 }
 
 model Session {
