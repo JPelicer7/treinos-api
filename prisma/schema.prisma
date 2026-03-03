@@ -59,6 +59,7 @@ model WorkoutDay {
   weekDay                    weekDay
   exercises                  WorkoutExercise[]
   sessions                   WorkoutSession[]
+  coverImageUrl String?
   estimatedDurationInSeconds Int
   createdAt                  DateTime          @default(now())
   updatedAt                  DateTime          @updatedAt
