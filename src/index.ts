@@ -18,6 +18,7 @@ import z from "zod";
 //import { weekDay } from "./generated/prisma/enums.js";
 import { auth } from "./lib/auth.js";
 import { homeRoutes } from "./routes/home.js";
+import { statsRoutes } from "./routes/stats.js";
 import { workoutPlanRoutes } from "./routes/workout-plan.js";
 //import { ErrorSchema, WorkoutPlanSchema } from "./schemas/index.js";
 //import { CreateWorkoutPlan } from "./usecases/CreateWorkoutPlan.js";
@@ -101,6 +102,7 @@ app.withTypeProvider<ZodTypeProvider>().route({
 // ROUTES - RESTFULL
 await app.register(workoutPlanRoutes, { prefix: "/workout-plans" });
 await app.register(homeRoutes, { prefix: "/home" });
+await app.register(statsRoutes, { prefix: "/stats" });
 
 // Register authentication endpoint
 app.route({
