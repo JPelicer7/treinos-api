@@ -112,6 +112,9 @@ await app.register(aiRoutes, { prefix: "/ai" });
 app.route({
   method: ["GET", "POST"],
   url: "/api/auth/*",
+  schema: {
+    hide: true, // para esse rota n aparecer na doc
+  },
   async handler(request, reply) {
     try {
       // Construct request URL

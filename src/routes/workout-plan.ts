@@ -32,8 +32,9 @@ export const workoutPlanRoutes = async (app: FastifyInstance) => {
     method: "POST",
     url: "/",
     schema: {
+      operationId: "CreateWorkoutPlan",
       tags: ["Workout Plan"],
-      summary: "Create a Workout Plan",
+      summary: "create a Workout Plan",
       body: WorkoutPlanSchema.omit({ id: true }),
       response: {
         201: WorkoutPlanSchema,
@@ -83,6 +84,7 @@ export const workoutPlanRoutes = async (app: FastifyInstance) => {
     method: "POST",
     url: "/:workoutPlanId/days/:workoutDayId/sessions",
     schema: {
+      operationId: "startWorkoutSession",
       tags: ["Workout Plan"],
       summary: "Start a workout session",
       params: z.object({
@@ -156,8 +158,9 @@ export const workoutPlanRoutes = async (app: FastifyInstance) => {
     method: "PATCH",
     url: "/:workoutPlanId/days/:workoutDayId/sessions/:sessionId",
     schema: {
+      operationId: "updateWorkoutSession",
       tags: ["Workout Plan"],
-      summary: "Completed Session",
+      summary: "Update a workout session",
       body: UpdateWorkoutSessionBodySchema,
       params: z.object({
         workoutPlanId: z.uuid(),
@@ -165,7 +168,7 @@ export const workoutPlanRoutes = async (app: FastifyInstance) => {
         sessionId: z.uuid(),
       }),
       response: {
-        201: UpdateWorkoutSessionSchema,
+        200: UpdateWorkoutSessionSchema,
         401: ErrorSchema,
         404: ErrorSchema,
         409: ErrorSchema,
@@ -196,7 +199,7 @@ export const workoutPlanRoutes = async (app: FastifyInstance) => {
           completedAt: request.body.completedAt,
         });
 
-        return reply.status(201).send(result);
+        return reply.status(200).send(result);
       } catch (error) {
         app.log.error(error);
 
@@ -219,6 +222,7 @@ export const workoutPlanRoutes = async (app: FastifyInstance) => {
     method: "GET",
     url: "/:workoutPlanId",
     schema: {
+      operationId: "getWorkoutPlan",
       tags: ["Workout Plan"],
       summary: "Get a workout plan",
       params: z.object({
@@ -272,6 +276,7 @@ export const workoutPlanRoutes = async (app: FastifyInstance) => {
     method: "GET",
     url: "/:workoutPlanId/days/:workoutDayId",
     schema: {
+      operationId: "getWorkoutDay",
       tags: ["Workout Plan"],
       summary: "Get a workout day",
       params: z.object({
@@ -327,6 +332,7 @@ export const workoutPlanRoutes = async (app: FastifyInstance) => {
     method: "GET",
     url: "/",
     schema: {
+      operationId: "listWorkoutPlan",
       tags: ["Workout Plan"],
       summary: "List workout plans",
       querystring: ListWorkoutPlansQuerySchema,
